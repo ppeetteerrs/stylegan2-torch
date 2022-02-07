@@ -17,14 +17,19 @@ class ConvBlock(nn.Sequential):
 
     def __init__(self, in_channel: int, out_channel: int, kernel_size: int):
         super().__init__(
-            EqualConv2d(in_channel,
-                        out_channel,
-                        kernel_size,
-                        padding=kernel_size // 2,
-                        stride=1,
-                        bias=False),
+            EqualConv2d(
+                in_channel,
+                out_channel,
+                kernel_size,
+                padding=kernel_size // 2,
+                stride=1,
+                bias=False,
+            ),
             FusedLeakyReLU(out_channel, bias=True),
         )
+
+    def __call__(self, input: Tensor) -> Tensor:
+        return super().__call__(input)
 
 
 class DownConvBlock(nn.Sequential):
@@ -36,18 +41,24 @@ class DownConvBlock(nn.Sequential):
     FusedLeakyReLU: LeakyReLU with a bias added before activation
     """
 
-    def __init__(self, in_channel: int, out_channel: int, kernel_size: int,
-                 down: int, blur_kernel: List[int]):
+    def __init__(
+        self,
+        in_channel: int,
+        out_channel: int,
+        kernel_size: int,
+        down: int,
+        blur_kernel: List[int],
+    ):
         super().__init__(
             Blur(blur_kernel, -down, kernel_size),
-            EqualConv2d(in_channel,
-                        out_channel,
-                        kernel_size,
-                        padding=0,
-                        stride=down,
-                        bias=False),
+            EqualConv2d(
+                in_channel, out_channel, kernel_size, padding=0, stride=down, bias=False
+            ),
             FusedLeakyReLU(out_channel, bias=True),
         )
+
+    def __call__(self, input: Tensor) -> Tensor:
+        return super().__call__(input)
 
 
 class RGBDown(nn.Sequential):
@@ -58,18 +69,24 @@ class RGBDown(nn.Sequential):
     EqualConv2d: 2D (downsampling) convolution with equalized learning rate
     """
 
-    def __init__(self, in_channel: int, out_channel: int, kernel_size: int,
-                 down: int, blur_kernel: List[int]):
+    def __init__(
+        self,
+        in_channel: int,
+        out_channel: int,
+        kernel_size: int,
+        down: int,
+        blur_kernel: List[int],
+    ):
 
         super().__init__(
             Blur(blur_kernel, -down, kernel_size),
-            EqualConv2d(in_channel,
-                        out_channel,
-                        kernel_size,
-                        padding=0,
-                        stride=down,
-                        bias=False),
+            EqualConv2d(
+                in_channel, out_channel, kernel_size, padding=0, stride=down, bias=False
+            ),
         )
+
+    def __call__(self, input: Tensor) -> Tensor:
+        return super().__call__(input)
 
 
 class ResBlock(nn.Module):
@@ -80,21 +97,14 @@ class ResBlock(nn.Module):
     RGBDown: Skip connection from higher (double) resolution RGB image
     """
 
-    def __init__(self, in_channel: int, out_channel: int,
-                 blur_kernel: List[int]):
+    def __init__(self, in_channel: int, out_channel: int, blur_kernel: List[int]):
         super().__init__()
 
         self.conv = ConvBlock(in_channel, in_channel, 3)
-        self.down_conv = DownConvBlock(in_channel,
-                                       out_channel,
-                                       3,
-                                       down=2,
-                                       blur_kernel=blur_kernel)
-        self.skip = RGBDown(in_channel,
-                            out_channel,
-                            1,
-                            down=2,
-                            blur_kernel=blur_kernel)
+        self.down_conv = DownConvBlock(
+            in_channel, out_channel, 3, down=2, blur_kernel=blur_kernel
+        )
+        self.skip = RGBDown(in_channel, out_channel, 1, down=2, blur_kernel=blur_kernel)
 
     def forward(self, input: Tensor) -> Tensor:
         out = self.conv(input)
@@ -103,3 +113,6 @@ class ResBlock(nn.Module):
         # sqrt 2 to adhere to equalized learning rate philosophy
         # (i.e. preserve variance in forward pass not initialization)
         return (out + skip) / math.sqrt(2)
+
+    def __call__(self, input: Tensor) -> Tensor:
+        return super().__call__(input)

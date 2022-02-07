@@ -1,5 +1,5 @@
 import math
-from typing import Dict, List
+from typing import Dict, List, Literal, Tuple, overload
 
 import torch
 from stylegan2_torch import Resolution, default_channels
@@ -14,10 +14,12 @@ class Discriminator(nn.Module):
     Discriminator module
     """
 
-    def __init__(self,
-                 resolution: Resolution,
-                 channels: Dict[Resolution, int] = default_channels,
-                 blur_kernel: List[int] = [1, 3, 3, 1]):
+    def __init__(
+        self,
+        resolution: Resolution,
+        channels: Dict[Resolution, int] = default_channels,
+        blur_kernel: List[int] = [1, 3, 3, 1],
+    ):
         super().__init__()
 
         # FromRGB followed by ResBlock
@@ -26,7 +28,7 @@ class Discriminator(nn.Module):
         self.blocks = nn.Sequential(
             ConvBlock(1, channels[resolution], 1),
             *[
-                ResBlock(channels[2**i], channels[2**(i - 1)], blur_kernel)
+                ResBlock(channels[2 ** i], channels[2 ** (i - 1)], blur_kernel)
                 for i in range(self.n_layers, 2, -1)
             ],
         )
@@ -40,6 +42,18 @@ class Discriminator(nn.Module):
         self.final_relu = EqualLeakyReLU(channels[4] * 4 * 4, channels[4])
         self.final_linear = EqualLinear(channels[4], 1)
 
+    @overload
+    def forward(
+        self, input: Tensor, *, return_features: Literal[False] = False
+    ) -> Tensor:
+        ...
+
+    @overload
+    def forward(
+        self, input: Tensor, *, return_features: Literal[True]
+    ) -> Tuple[Tensor, Tensor]:
+        ...
+
     def forward(self, input: Tensor, *, return_features: bool = False):
         # Downsampling blocks
         out: Tensor = self.blocks(input)
@@ -49,8 +63,9 @@ class Discriminator(nn.Module):
         # Other layers do not cross sample boundaries
         batch, channel, height, width = out.shape
         n_groups = min(batch, self.stddev_group)
-        stddev = out.view(n_groups, -1, self.stddev_feat,
-                          channel // self.stddev_feat, height, width)
+        stddev = out.view(
+            n_groups, -1, self.stddev_feat, channel // self.stddev_feat, height, width
+        )
         stddev = torch.sqrt(stddev.var(0, unbiased=False) + 1e-8)
         stddev = stddev.mean([2, 3, 4], keepdim=True).squeeze(2)
         stddev = stddev.repeat(n_groups, 1, height, width)
@@ -65,3 +80,18 @@ class Discriminator(nn.Module):
             return out, features
         else:
             return out
+
+    @overload
+    def __call__(
+        self, input: Tensor, *, return_features: Literal[False] = False
+    ) -> Tensor:
+        ...
+
+    @overload
+    def __call__(
+        self, input: Tensor, *, return_features: Literal[True]
+    ) -> Tuple[Tensor, Tensor]:
+        ...
+
+    def __call__(self, *args: Any, **kwargs: Any):
+        return super().__call__(args, kwargs)

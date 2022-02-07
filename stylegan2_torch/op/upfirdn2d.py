@@ -16,12 +16,11 @@ upfirdn2d_op = load(
         os.path.join(module_path, "upfirdn2d.cpp"),
         os.path.join(module_path, "upfirdn2d_kernel.cu"),
     ],
-    verbose=strtobool(os.environ["STYLEGAN2_BUILD_VERBOSE"])
+    verbose=strtobool(os.environ.get("STYLEGAN2_BUILD_VERBOSE", "f")),
 )
 
 
 class UpFirDn2dBackward(Function):
-
     @staticmethod
     def forward(
         ctx: Any,
@@ -55,8 +54,7 @@ class UpFirDn2dBackward(Function):
             g_pad_y0,
             g_pad_y1,
         )
-        grad_input = grad_input.view(in_size[0], in_size[1], in_size[2],
-                                     in_size[3])
+        grad_input = grad_input.view(in_size[0], in_size[1], in_size[2], in_size[3])
 
         # Save kernel for double derivative
         ctx.save_for_backward(kernel)
@@ -80,16 +78,16 @@ class UpFirDn2dBackward(Function):
     @staticmethod
     def backward(
         ctx: Any, gradgrad_input: Tensor
-    ) -> Tuple[Optional[Tensor], None, None, None, None, None, None, None,
-               None]:
+    ) -> Tuple[Optional[Tensor], None, None, None, None, None, None, None, None]:
         # Load saved kernel
-        (kernel, ) = ctx.saved_tensors
+        (kernel,) = ctx.saved_tensors
 
         # Only compute gradient if requested
         gradgrad_out = None
         if ctx.needs_input_grad[0]:
-            gradgrad_input = gradgrad_input.reshape(-1, 1, ctx.in_size[2],
-                                                    ctx.in_size[3])
+            gradgrad_input = gradgrad_input.reshape(
+                -1, 1, ctx.in_size[2], ctx.in_size[3]
+            )
             gradgrad_out = upfirdn2d_op.upfirdn2d(
                 gradgrad_input,
                 kernel,
@@ -101,14 +99,12 @@ class UpFirDn2dBackward(Function):
                 ctx.pad_x1,
                 ctx.pad_y0,
                 ctx.pad_y1,
-            ).view(ctx.in_size[0], ctx.in_size[1], ctx.out_size[0],
-                   ctx.out_size[1])
+            ).view(ctx.in_size[0], ctx.in_size[1], ctx.out_size[0], ctx.out_size[1])
 
         return gradgrad_out, None, None, None, None, None, None, None, None
 
 
 class UpFirDn2d(Function):
-
     @staticmethod
     def forward(
         ctx: Any,

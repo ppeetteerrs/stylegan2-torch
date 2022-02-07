@@ -38,7 +38,8 @@ def demod(weight: Tensor) -> Tensor:
     """
     batch, out_channel, _, _, _ = weight.shape
     demod = torch.rsqrt(weight.pow(2).sum([2, 3, 4]) + 1e-8).view(
-        batch, out_channel, 1, 1, 1)
+        batch, out_channel, 1, 1, 1
+    )
     return weight * demod
 
 
@@ -93,8 +94,9 @@ class ModConvBlock(nn.Module):
     output features => add noise & leaky ReLU => final output features
     """
 
-    def __init__(self, in_channel: int, out_channel: int, kernel_size: int,
-                 latent_dim: int):
+    def __init__(
+        self, in_channel: int, out_channel: int, kernel_size: int, latent_dim: int
+    ):
         super().__init__()
 
         # Affine mapping from W to style vector
@@ -102,15 +104,15 @@ class ModConvBlock(nn.Module):
 
         # Trainable parameters
         self.weight = Parameter(
-            torch.randn(1, out_channel, in_channel, kernel_size, kernel_size))
-        self.scale = 1 / math.sqrt(in_channel * kernel_size**2)
+            torch.randn(1, out_channel, in_channel, kernel_size, kernel_size)
+        )
+        self.scale = 1 / math.sqrt(in_channel * kernel_size ** 2)
 
         # Noise and Leaky ReLU
         self.add_noise = AddNoise()
         self.leaky_relu = FusedLeakyReLU(out_channel)
 
-    def forward(self, input: Tensor, w: Tensor,
-                noise: Optional[Tensor]) -> Tensor:
+    def forward(self, input: Tensor, w: Tensor, noise: Optional[Tensor]) -> Tensor:
         batch, in_channel, _, _ = input.shape
 
         # Get style vectors (N, 1, C_in, 1, 1)
@@ -131,6 +133,9 @@ class ModConvBlock(nn.Module):
         # Add learnable bias and activate
         return self.leaky_relu(out)
 
+    def __call__(self, input: Tensor, w: Tensor, noise: Optional[Tensor]) -> Tensor:
+        return super().__call__(input, w, noise)
+
 
 def group_conv_up(input: Tensor, weight: Tensor, up: int = 2) -> Tensor:
     """
@@ -148,14 +153,11 @@ def group_conv_up(input: Tensor, weight: Tensor, up: int = 2) -> Tensor:
     batch, in_channel, height, width = input.shape
     _, out_channel, _, k_h, k_w = weight.shape
 
-    weight = weight.transpose(1, 2).reshape(batch * in_channel, out_channel,
-                                            k_h, k_w)
+    weight = weight.transpose(1, 2).reshape(batch * in_channel, out_channel, k_h, k_w)
     input = input.view(1, batch * in_channel, height, width)
-    out = conv_transpose2d(input=input,
-                           weight=weight,
-                           stride=up,
-                           padding=0,
-                           groups=batch)
+    out = conv_transpose2d(
+        input=input, weight=weight, stride=up, padding=0, groups=batch
+    )
     _, _, out_h, out_w = out.shape
     return out.view(batch, out_channel, out_h, out_w)
 
@@ -186,8 +188,9 @@ class UpModConvBlock(nn.Module):
 
         # Trainable parameters
         self.weight = Parameter(
-            torch.randn(1, out_channel, in_channel, kernel_size, kernel_size))
-        self.scale = 1 / math.sqrt(in_channel * kernel_size**2)
+            torch.randn(1, out_channel, in_channel, kernel_size, kernel_size)
+        )
+        self.scale = 1 / math.sqrt(in_channel * kernel_size ** 2)
 
         # Blurring kernel
         self.up = up
@@ -197,8 +200,7 @@ class UpModConvBlock(nn.Module):
         self.add_noise = AddNoise()
         self.leaky_relu = FusedLeakyReLU(out_channel)
 
-    def forward(self, input: Tensor, w: Tensor,
-                noise: Optional[Tensor]) -> Tensor:
+    def forward(self, input: Tensor, w: Tensor, noise: Optional[Tensor]) -> Tensor:
         batch, in_channel, _, _ = input.shape
 
         # Get style vectors (N, 1, C_in, 1, 1)
@@ -221,3 +223,6 @@ class UpModConvBlock(nn.Module):
 
         # Add learnable bias and activate
         return self.leaky_relu(out)
+
+    def __call__(self, input: Tensor, w: Tensor, noise: Optional[Tensor]) -> Tensor:
+        return super().__call__(input, w, noise)
