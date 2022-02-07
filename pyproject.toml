@@ -2,7 +2,7 @@
 authors = ["Peter Yuen <ppeetteerrsx@gmail.com>"]
 description = "A simple, typed, commented Pytorch implementation of StyleGAN2."
 name = "stylegan2-torch"
-version = "0.1.1"
+version = "0.1.2"
 
 [tool.poetry.dependencies]
 python = "^3.8"
