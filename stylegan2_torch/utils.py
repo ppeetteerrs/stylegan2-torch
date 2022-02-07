@@ -1,6 +1,6 @@
 import math
 import random
-from typing import List, Literal, Tuple, Union
+from typing import Dict, List, Literal, Tuple, Union
 
 import torch
 from torch import autograd, nn
@@ -8,6 +8,20 @@ from torch.functional import Tensor
 from torch.nn import functional as F
 
 from stylegan2_torch.op.conv2d_gradfix import no_weight_gradients
+
+Resolution = Literal[4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192]
+
+default_channels: Dict[Resolution, int] = {
+    4: 512,
+    8: 512,
+    16: 512,
+    32: 512,
+    64: 512,
+    128: 256,
+    256: 128,
+    512: 64,
+    1024: 32,
+}
 
 
 def make_kernel(
@@ -22,15 +36,15 @@ def make_kernel(
     kernel = kernel[None, :] * kernel[:, None]
 
     kernel /= kernel.sum()
-    kernel *= factor**2
+    kernel *= factor ** 2
 
     return kernel
 
 
 def accumulate(
-        model1: nn.Module,
-        model2: nn.Module,
-        decay: float = 0.5**(32 / (10 * 1000)),
+    model1: nn.Module,
+    model2: nn.Module,
+    decay: float = 0.5 ** (32 / (10 * 1000)),
 ) -> None:
     """
     Accumulate parameters of model2 onto model1 using EMA
@@ -57,11 +71,10 @@ def d_logistic_loss(
 
 def d_r1_loss(real_pred: Tensor, real_img: Tensor) -> Tensor:
     with no_weight_gradients():
-        (grad_real, ) = autograd.grad(outputs=real_pred.sum(),
-                                      inputs=real_img,
-                                      create_graph=True)
-    grad_penalty = grad_real.pow(2).reshape(grad_real.shape[0],
-                                            -1).sum(1).mean()
+        (grad_real,) = autograd.grad(
+            outputs=real_pred.sum(), inputs=real_img, create_graph=True
+        )
+    grad_penalty = grad_real.pow(2).reshape(grad_real.shape[0], -1).sum(1).mean()
 
     return grad_penalty
 
@@ -79,14 +92,14 @@ def g_path_regularize(
     decay: float = 0.01,
 ) -> Tuple[Tensor, Tensor, Tensor]:
     noise = torch.randn_like(fake_img) / math.sqrt(
-        fake_img.shape[2] * fake_img.shape[3])
-    (grad, ) = autograd.grad(outputs=(fake_img * noise).sum(),
-                             inputs=latents,
-                             create_graph=True)
+        fake_img.shape[2] * fake_img.shape[3]
+    )
+    (grad,) = autograd.grad(
+        outputs=(fake_img * noise).sum(), inputs=latents, create_graph=True
+    )
     path_lengths = torch.sqrt(grad.pow(2).sum(2).mean(1))
 
-    path_mean = mean_path_length + decay * (path_lengths.mean() -
-                                            mean_path_length)
+    path_mean = mean_path_length + decay * (path_lengths.mean() - mean_path_length)
 
     path_penalty = (path_lengths - path_mean).pow(2).mean()
 
