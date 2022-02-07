@@ -229,4 +229,4 @@ class Generator(nn.Module):
         ...
 
     def __call__(self, *args: Any, **kwargs: Any):
-        return super().__call__(args, kwargs)
+        return super().__call__(*args, **kwargs)
