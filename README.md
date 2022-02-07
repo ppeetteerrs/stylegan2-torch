@@ -6,6 +6,11 @@ The focus of this repository is simplicity and readability. If there are any bug
 
 Refer to [my blog post](https://ppeetteerrsx.com/post/cuda/stylegan_cuda_kernels/) for an explanation on the custom CUDA kernels. The profiling code to optimize the custom operations is [here](https://github.com/ppeetteerrs/pytorch-cuda-kernels).
 
+## Installation
+```bash
+pip install stylegan2-torch
+```
+
 ## Training Tips
 
 1. Use a multi-GPU setup. An RTX 3090 can handle batch size of up to 8 at 1024 resolution. Based on experience, batch size of 8 works but 16 or 32 should be safer.
