@@ -2,9 +2,9 @@ import math
 from typing import List, Optional
 
 import torch
-from stylegan2_pytorch.equalized_lr import Blur, EqualLinear
-from stylegan2_pytorch.op.conv2d_gradfix import conv2d, conv_transpose2d
-from stylegan2_pytorch.op.fused_act import FusedLeakyReLU
+from stylegan2_torch.equalized_lr import Blur, EqualLinear
+from stylegan2_torch.op.conv2d_gradfix import conv2d, conv_transpose2d
+from stylegan2_torch.op.fused_act import FusedLeakyReLU
 from torch import nn
 from torch.functional import Tensor
 from torch.nn.parameter import Parameter

@@ -7,7 +7,7 @@ from torch import autograd, nn
 from torch.functional import Tensor
 from torch.nn import functional as F
 
-from stylegan2_pytorch.op.conv2d_gradfix import no_weight_gradients
+from stylegan2_torch.op.conv2d_gradfix import no_weight_gradients
 
 
 def make_kernel(

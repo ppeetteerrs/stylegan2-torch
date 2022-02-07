@@ -1,8 +1,8 @@
 import math
 from typing import List
 
-from stylegan2_pytorch.equalized_lr import Blur, EqualConv2d
-from stylegan2_pytorch.op.fused_act import FusedLeakyReLU
+from stylegan2_torch.equalized_lr import Blur, EqualConv2d
+from stylegan2_torch.op.fused_act import FusedLeakyReLU
 from torch import nn
 from torch.functional import Tensor
 

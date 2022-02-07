@@ -2,10 +2,10 @@ import math
 from typing import List, Optional
 
 import torch
-from stylegan2_pytorch.equalized_lr import EqualLinear
-from stylegan2_pytorch.generator.conv_block import group_conv, mod
-from stylegan2_pytorch.op.upfirdn2d import upfirdn2d
-from stylegan2_pytorch.utils import make_kernel
+from stylegan2_torch.equalized_lr import EqualLinear
+from stylegan2_torch.generator.conv_block import group_conv, mod
+from stylegan2_torch.op.upfirdn2d import upfirdn2d
+from stylegan2_torch.utils import make_kernel
 from torch import nn
 from torch.functional import Tensor
 from torch.nn.parameter import Parameter

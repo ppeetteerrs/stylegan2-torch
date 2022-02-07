@@ -7,10 +7,10 @@ from torch.functional import Tensor
 from torch.nn import functional as F
 from torch.nn.parameter import Parameter
 
-from stylegan2_pytorch.op.conv2d_gradfix import conv2d
-from stylegan2_pytorch.op.fused_act import fused_leaky_relu
-from stylegan2_pytorch.op.upfirdn2d import upfirdn2d
-from stylegan2_pytorch.utils import make_kernel
+from stylegan2_torch.op.conv2d_gradfix import conv2d
+from stylegan2_torch.op.fused_act import fused_leaky_relu
+from stylegan2_torch.op.upfirdn2d import upfirdn2d
+from stylegan2_torch.utils import make_kernel
 
 
 class EqualConv2d(nn.Module):

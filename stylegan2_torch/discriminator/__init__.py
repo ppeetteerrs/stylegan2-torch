@@ -2,9 +2,9 @@ import math
 from typing import Dict, List
 
 import torch
-from stylegan2_pytorch import Resolution
-from stylegan2_pytorch.discriminator.blocks import ConvBlock, ResBlock
-from stylegan2_pytorch.equalized_lr import EqualLeakyReLU, EqualLinear
+from stylegan2_torch import Resolution
+from stylegan2_torch.discriminator.blocks import ConvBlock, ResBlock
+from stylegan2_torch.equalized_lr import EqualLeakyReLU, EqualLinear
 from torch import nn
 from torch.functional import Tensor
 

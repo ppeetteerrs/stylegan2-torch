@@ -3,10 +3,10 @@ import random
 from typing import Dict, List, Literal, Optional, Tuple
 
 import torch
-from stylegan2_pytorch import Resolution, default_channels
-from stylegan2_pytorch.generator.conv_block import ModConvBlock, UpModConvBlock
-from stylegan2_pytorch.generator.mapping import MappingNetwork
-from stylegan2_pytorch.generator.rgb import ToRGB
+from stylegan2_torch import Resolution, default_channels
+from stylegan2_torch.generator.conv_block import ModConvBlock, UpModConvBlock
+from stylegan2_torch.generator.mapping import MappingNetwork
+from stylegan2_torch.generator.rgb import ToRGB
 from torch import nn
 from torch.functional import Tensor
 from torch.nn.parameter import Parameter

@@ -1,6 +1,6 @@
 from typing import Dict, List, Literal, Optional, Tuple, overload
 
-from stylegan2_pytorch import Resolution, default_channels
+from stylegan2_torch import Resolution, default_channels
 from torch import nn
 from torch.functional import Tensor
 

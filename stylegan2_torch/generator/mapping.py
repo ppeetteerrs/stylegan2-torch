@@ -1,5 +1,5 @@
 import torch
-from stylegan2_pytorch.equalized_lr import EqualLeakyReLU
+from stylegan2_torch.equalized_lr import EqualLeakyReLU
 from torch import nn
 from torch.functional import Tensor
 
