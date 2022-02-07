@@ -4,7 +4,7 @@ from torch import nn
 from torch.functional import Tensor
 
 
-class Normalize(NNModule):
+class Normalize(nn.Module):
     """
     Normalize latent vector for each sample
     """
