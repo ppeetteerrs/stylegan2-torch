@@ -14,8 +14,10 @@ class Discriminator(nn.Module):
     Discriminator module
     """
 
-    def __init__(self, *, resolution: Resolution,
-                 channels: Dict[Resolution, int]=default_channels, blur_kernel: List[int] = [1,3,3,1]):
+    def __init__(self,
+                 resolution: Resolution,
+                 channels: Dict[Resolution, int] = default_channels,
+                 blur_kernel: List[int] = [1, 3, 3, 1]):
         super().__init__()
 
         # FromRGB followed by ResBlock

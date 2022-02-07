@@ -7,9 +7,10 @@ from torch.functional import Tensor
 
 class Discriminator(nn.Module):
 
-
-    def __init__(self, *, resolution: Resolution,
-                 channels: Dict[Resolution, int]=default_channels, blur_kernel: List[int] = [1,3,3,1]):
+    def __init__(self,
+                 resolution: Resolution,
+                 channels: Dict[Resolution, int] = default_channels,
+                 blur_kernel: List[int] = [1, 3, 3, 1]):
         ...
 
     @overload
