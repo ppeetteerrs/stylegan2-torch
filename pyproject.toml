@@ -1,0 +1,18 @@
+[tool.poetry]
+authors = ["Peter Yuen <ppeetteerrsx@gmail.com>"]
+description = "A simple, typed, commented Pytorch implementation of StyleGAN2."
+name = "stylegan2-pytorch"
+version = "0.1.0"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+torch = "^1.10.2"
+torchvision = "^0.11.3"
+
+[tool.poetry.dev-dependencies]
+flake8 = "^4.0.1"
+yapf = "^0.32.0"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
