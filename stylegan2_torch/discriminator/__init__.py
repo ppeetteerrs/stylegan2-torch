@@ -2,7 +2,7 @@ import math
 from typing import Dict, List
 
 import torch
-from stylegan2_torch import Resolution
+from stylegan2_torch import Resolution, default_channels
 from stylegan2_torch.discriminator.blocks import ConvBlock, ResBlock
 from stylegan2_torch.equalized_lr import EqualLeakyReLU, EqualLinear
 from torch import nn
@@ -15,7 +15,7 @@ class Discriminator(nn.Module):
     """
 
     def __init__(self, *, resolution: Resolution,
-                 channels: Dict[Resolution, int], blur_kernel: List[int]):
+                 channels: Dict[Resolution, int]=default_channels, blur_kernel: List[int] = [1,3,3,1]):
         super().__init__()
 
         # FromRGB followed by ResBlock
