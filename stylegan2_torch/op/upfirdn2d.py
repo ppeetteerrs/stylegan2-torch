@@ -89,7 +89,7 @@ class UpFirDn2dBackward(Function):
                 -1, 1, ctx.in_size[2], ctx.in_size[3]
             )
             gradgrad_out = upfirdn2d_op.upfirdn2d(
-                gradgrad_input,
+                gradgrad_input.contiguous(),
                 kernel,
                 ctx.up_x,
                 ctx.up_y,
@@ -177,7 +177,7 @@ class UpFirDn2d(Function):
         grad_input = None
         if ctx.needs_input_grad[0]:
             grad_input = UpFirDn2dBackward.apply(
-                grad_output,
+                grad_output.contiguous(),
                 kernel,
                 grad_kernel,
                 ctx.up,
