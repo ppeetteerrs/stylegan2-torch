@@ -1,7 +1,7 @@
 {% set data = load_setup_py_data() %}
 
 package:
-  name: stylegan2_torch
+  name: stylegan2-torch
   version: {{ data["version"] }}
 
 source:
@@ -37,4 +37,4 @@ about:
   license: {{ data["license"] }}
   license_file: LICENSE
   dev_url: {{ data["url"] }}
-  doc_url: https://ppeetteerrs.github.io/stylegan2_torch
+  doc_url: https://ppeetteerrs.github.io/stylegan2-torch

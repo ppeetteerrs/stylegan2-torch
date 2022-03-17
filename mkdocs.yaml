@@ -1,8 +1,8 @@
-site_name: stylegan2_torch
+site_name: stylegan2-torch
 
-site_url: https://ppeetteerrs.github.io/stylegan2_torch
+site_url: https://ppeetteerrs.github.io/stylegan2-torch
 
-repo_url: https://github.com/ppeetteerrs/stylegan2_torch
+repo_url: https://github.com/ppeetteerrs/stylegan2-torch
 
 theme:
     palette:
@@ -37,6 +37,6 @@ nav:
     - Installation: installation.md
     - Setup: setup.md
     - FAQ: faq.md
-    - Report Issues: https://github.com/ppeetteerrs/stylegan2_torch/issues
+    - Report Issues: https://github.com/ppeetteerrs/stylegan2-torch/issues
     # - API Reference:
     #       - stylegan2_torch module: stylegan2_torch.md
