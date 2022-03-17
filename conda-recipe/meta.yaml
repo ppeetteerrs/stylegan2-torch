@@ -18,9 +18,7 @@ requirements:
     - dunamai
   run:
     - python
-    {% for dep in data["install_requires"] %}
-    - {{ dep.lower() }}
-    {% endfor %}
+    - pytorch
 
 test:
   source_files:
