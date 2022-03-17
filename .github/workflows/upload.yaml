@@ -42,4 +42,4 @@ jobs:
           conda install -qy -c conda-forge dunamai
           conda install -qy conda-build anaconda-client conda-verify
           conda config --set anaconda_upload yes
-          conda build -c conda-forge --output-folder . .
+          conda build -c conda-forge --no-test --output-folder . .
