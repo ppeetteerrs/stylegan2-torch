@@ -22,7 +22,7 @@ setup(
         exclude=["docs"],
     ),
     package_data={
-        "": ["*.txt"],
+        "stylegan2_torch": ["*.cpp", "*.cu"],
     },
     test_suite="tests",
     url="https://github.com/ppeetteerrs/stylegan2_torch",

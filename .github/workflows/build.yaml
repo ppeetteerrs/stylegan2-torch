@@ -39,6 +39,6 @@ jobs:
               run: |
                   conda install -qy -c conda-forge dunamai
                   conda install -qy conda-build anaconda-client conda-verify
-                  conda build -c conda-forge --output-folder . .
+                  conda build -c conda-forge -b --output-folder . .
             - name: Upload Codecov
               uses: codecov/codecov-action@v2
