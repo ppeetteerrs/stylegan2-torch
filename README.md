@@ -2,7 +2,7 @@
 
 ![action](https://img.shields.io/github/workflow/status/ppeetteerrs/stylegan2-torch/build?logo=githubactions&logoColor=white)
 [![pypi](https://img.shields.io/pypi/v/stylegan2-torch.svg)](https://pypi.python.org/pypi/stylegan2-torch)
-[![anaconda](https://img.shields.io/conda/vn/ppeetteerrs/stylegan2-torch?logo=anaconda)]()
+[![anaconda](https://img.shields.io/conda/vn/ppeetteerrs/stylegan2-torch?logo=anaconda)](https://anaconda.org/ppeetteerrs/stylegan2-torch)
 ![platform](https://img.shields.io/conda/pn/ppeetteerrs/stylegan2-torch?label=platform&color=blueviolet)
 [![codecov](https://img.shields.io/codecov/c/github/ppeetteerrs/stylegan2-torch?label=codecov&logo=codecov)](https://app.codecov.io/gh/ppeetteerrs/stylegan2-torch)
 [![docs](https://img.shields.io/github/deployments/ppeetteerrs/stylegan2-torch/github-pages?label=docs&logo=readthedocs)](https://ppeetteerrs.github.io/stylegan2-torch)
