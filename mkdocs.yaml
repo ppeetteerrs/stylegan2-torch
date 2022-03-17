@@ -1,0 +1,42 @@
+site_name: stylegan2_torch
+
+site_url: https://ppeetteerrs.github.io/stylegan2_torch
+
+repo_url: https://github.com/ppeetteerrs/stylegan2_torch
+
+theme:
+    palette:
+        scheme: preference
+    name: gitbook
+    icon:
+        repo: fontawesome/brands/github
+    features:
+        - navigation.instant
+        - search.highlight
+        # - navigation.expand
+        # - navigation.tabs
+    custom_dir: "docs/overrides"
+
+plugins:
+    - mkdocstrings
+    - git-revision-date
+    - mkdocs-jupyter:
+          include_source: True
+          execute: True
+
+markdown_extensions:
+    - attr_list
+    - pymdownx.superfences
+    - pymdownx.highlight:
+          linenums: true
+    - toc:
+          permalink: true
+
+nav:
+    - Home: index.md
+    - Installation: installation.md
+    - Setup: setup.md
+    - FAQ: faq.md
+    - Report Issues: https://github.com/ppeetteerrs/stylegan2_torch/issues
+    # - API Reference:
+    #       - stylegan2_torch module: stylegan2_torch.md

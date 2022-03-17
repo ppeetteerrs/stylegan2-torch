@@ -67,7 +67,7 @@ class Generator(nn.Module):
 
             # Calculate image size and channels at the layer
             prev_layer_size = 2 ** (layer_idx - 1)
-            layer_size: Resolution = 2 ** layer_idx
+            layer_size: Resolution = 2**layer_idx
             layer_channel = channels[layer_size]
 
             # Upsampling Conv Block

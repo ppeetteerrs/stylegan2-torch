@@ -1,0 +1,48 @@
+{
+	"dockerFile": "Dockerfile",
+	"context": ".",
+	"runArgs": [
+		"--shm-size=1g",
+		"--gpus",
+		"all",
+		"--ulimit",
+		"memlock=-1",
+		"--ulimit",
+		"stack=67108864",
+		"--name",
+		"stylegan2-torch"
+	],
+	"extensions": [
+		"ms-python.vscode-pylance",
+		"ms-python.python",
+		"ms-vscode.cpptools",
+		"ms-vscode.cpptools-extension-pack",
+		"nvidia.nsight-vscode-edition",
+		"trungngo.autoflake",
+		"kevinkyang.auto-comment-blocks",
+		"ms-toolsai.jupyter",
+		"yzhang.markdown-all-in-one",
+		"christian-kohler.path-intellisense",
+		"njpwerner.autodocstring",
+		"redhat.vscode-yaml",
+		"stackbreak.comment-divider"
+	],
+	"settings": {
+		"C_Cpp.default.includePath": [
+			"/opt/conda/lib/python3.8/site-packages/torch/include/torch/csrc/api/include/",
+			"/opt/conda/lib/python3.8/site-packages/torch/include/",
+			"/opt/conda/include/python3.8/",
+			"/usr/local/cuda/targets/x86_64-linux/include/"
+		],
+		"python.analysis.typeCheckingMode": "basic",
+		"python.analysis.diagnosticSeverityOverrides": {
+			"reportPrivateImportUsage": "none"
+		},
+		"python.sortImports.path": "/home/user/mambaforge/envs/user/bin/isort",
+		"python.linting.flake8Args": [
+			"--ignore=E402,E203,W503",
+			"--max-line-length=120"
+		],
+		"terminal.integrated.defaultProfile.linux": "zsh"
+	},
+}

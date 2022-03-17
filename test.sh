@@ -1,0 +1,1 @@
+python -m pytest --cov=stylegan2_torch --cov-report=xml tests

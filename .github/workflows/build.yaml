@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: build
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+    workflow_dispatch:
+        branches:
+            - main
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+            - name: Setup Python
+              uses: actions/setup-python@v2
+              with:
+                  python-version: "3.8"
+            - name: Test PyPI Build
+              run: |
+                  python -m pip install --upgrade pip
+                  pip install --no-cache-dir Cython
+                  pip install setuptools wheel twine pytest pytest-cov dunamai
+                  python setup.py sdist bdist_wheel
+            - name: Setup Miniconda
+              uses: conda-incubator/setup-miniconda@v2
+              with:
+                  auto-activate-base: true
+                  activate-environment: ""
+            - name: Test Conda Build
+              run: |
+                  conda install -qy -c conda-forge dunamai
+                  conda install -qy conda-build anaconda-client conda-verify
+                  conda build -c conda-forge --output-folder . .
+            - name: Upload Codecov
+              uses: codecov/codecov-action@v2
