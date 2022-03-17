@@ -14,6 +14,7 @@ The focus of this repository is simplicity and readability. If there are any bug
 Refer to [my blog post](https://ppeetteerrsx.com/post/cuda/stylegan_cuda_kernels/) for an explanation on the custom CUDA kernels. The profiling code to optimize the custom operations is [here](https://github.com/ppeetteerrs/pytorch-cuda-kernels).
 
 ## Installation
+
 ```bash
 pip install stylegan2-torch
 ```
