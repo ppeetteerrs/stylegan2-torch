@@ -1,7 +1,5 @@
-FROM ppeetteerrs/pytorch:latest
+FROM ghcr.io/ppeetteerrs/pytorch:latest
 
-WORKDIR /workspace
+RUN pip install "poetry>=1.2.*" poetry-dynamic-versioning torch-conv-gradfix
 
-RUN mamba install -y pytest pytest-cov dunamai
-
-CMD "zsh"
+CMD ["zsh"]

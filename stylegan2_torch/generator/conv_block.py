@@ -3,11 +3,12 @@ from typing import List, Optional
 
 import torch
 from stylegan2_torch.equalized_lr import Blur, EqualLinear
-from stylegan2_torch.op.conv2d_gradfix import conv2d, conv_transpose2d
 from stylegan2_torch.op.fused_act import FusedLeakyReLU
+from stylegan2_torch.utils import proxy
 from torch import nn
 from torch.functional import Tensor
 from torch.nn.parameter import Parameter
+from torch_conv_gradfix import conv2d, conv_transpose2d
 
 
 def mod(weight: Tensor, style: Tensor) -> Tensor:
@@ -83,6 +84,8 @@ class AddNoise(nn.Module):
 
         return input + self.weight * noise
 
+    __call__ = proxy(forward)
+
 
 class ModConvBlock(nn.Module):
     """
@@ -106,7 +109,7 @@ class ModConvBlock(nn.Module):
         self.weight = Parameter(
             torch.randn(1, out_channel, in_channel, kernel_size, kernel_size)
         )
-        self.scale = 1 / math.sqrt(in_channel * kernel_size ** 2)
+        self.scale = 1 / math.sqrt(in_channel * kernel_size**2)
 
         # Noise and Leaky ReLU
         self.add_noise = AddNoise()
@@ -133,8 +136,7 @@ class ModConvBlock(nn.Module):
         # Add learnable bias and activate
         return self.leaky_relu(out)
 
-    def __call__(self, input: Tensor, w: Tensor, noise: Optional[Tensor]) -> Tensor:
-        return super().__call__(input, w, noise)
+    __call__ = proxy(forward)
 
 
 def group_conv_up(input: Tensor, weight: Tensor, up: int = 2) -> Tensor:
@@ -190,7 +192,7 @@ class UpModConvBlock(nn.Module):
         self.weight = Parameter(
             torch.randn(1, out_channel, in_channel, kernel_size, kernel_size)
         )
-        self.scale = 1 / math.sqrt(in_channel * kernel_size ** 2)
+        self.scale = 1 / math.sqrt(in_channel * kernel_size**2)
 
         # Blurring kernel
         self.up = up
@@ -224,5 +226,4 @@ class UpModConvBlock(nn.Module):
         # Add learnable bias and activate
         return self.leaky_relu(out)
 
-    def __call__(self, input: Tensor, w: Tensor, noise: Optional[Tensor]) -> Tensor:
-        return super().__call__(input, w, noise)
+    __call__ = proxy(forward)

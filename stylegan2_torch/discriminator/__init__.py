@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Literal, Tuple, overload
 import torch
 from stylegan2_torch.discriminator.blocks import ConvBlock, ResBlock
 from stylegan2_torch.equalized_lr import EqualLeakyReLU, EqualLinear
-from stylegan2_torch.utils import Resolution, default_channels
+from stylegan2_torch.utils import Resolution, default_channels, proxy
 from torch import nn
 from torch.functional import Tensor
 
@@ -28,7 +28,7 @@ class Discriminator(nn.Module):
         self.blocks = nn.Sequential(
             ConvBlock(1, channels[resolution], 1),
             *[
-                ResBlock(channels[2 ** i], channels[2 ** (i - 1)], blur_kernel)
+                ResBlock(channels[2**i], channels[2 ** (i - 1)], blur_kernel)
                 for i in range(self.n_layers, 2, -1)
             ],
         )
@@ -81,17 +81,4 @@ class Discriminator(nn.Module):
         else:
             return out
 
-    @overload
-    def __call__(
-        self, input: Tensor, *, return_features: Literal[False] = False
-    ) -> Tensor:
-        ...
-
-    @overload
-    def __call__(
-        self, input: Tensor, *, return_features: Literal[True]
-    ) -> Tuple[Tensor, Tensor]:
-        ...
-
-    def __call__(self, *args: Any, **kwargs: Any):
-        return super().__call__(*args, **kwargs)
+    __call__ = proxy(forward)

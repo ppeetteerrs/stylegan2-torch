@@ -1,0 +1,82 @@
+name: on_push
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  dry-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+      - name: Dry Run
+        env:
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir Cython
+          pip install poetry poetry-dynamic-versioning
+          poetry install
+          poetry publish --dry-run --build
+  tests:
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.os }} (${{ matrix.config.py }})
+    strategy:
+      fail-fast: true
+      matrix:
+        config:
+          - { os: windows-latest, py: "3.8" }
+          - { os: macOS-latest, py: "3.8" }
+          - { os: ubuntu-latest, py: "3.8" }
+
+    env:
+      SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
+      OS: ${{ matrix.os }}
+      PYTHON: ${{ matrix.py }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.config.py }}
+      - name: Run Tests
+        run: |
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir Cython
+          pip install poetry poetry-dynamic-versioning
+          poetry install
+          poetry run test
+      - name: Upload Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          env_vars: OS,PYTHON
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Build Docs
+        run: |
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir Cython
+          pip install poetry poetry-dynamic-versioning
+          poetry install
+          poetry run docs

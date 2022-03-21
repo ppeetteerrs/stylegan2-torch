@@ -1,6 +1,9 @@
 {
-	"dockerFile": "Dockerfile",
-	"context": ".",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".",
+	},
+	"postCreateCommand": "poetry install --only=dev",
 	"runArgs": [
 		"--shm-size=1g",
 		"--gpus",
@@ -25,7 +28,8 @@
 		"christian-kohler.path-intellisense",
 		"njpwerner.autodocstring",
 		"redhat.vscode-yaml",
-		"stackbreak.comment-divider"
+		"stackbreak.comment-divider",
+		"bungcip.better-toml"
 	],
 	"settings": {
 		"C_Cpp.default.includePath": [

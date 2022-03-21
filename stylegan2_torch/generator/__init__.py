@@ -1,12 +1,12 @@
 import math
 import random
-from typing import Any, Dict, List, Literal, Optional, Tuple, overload
+from typing import Dict, List, Literal, Optional, Tuple, overload
 
 import torch
 from stylegan2_torch.generator.conv_block import ModConvBlock, UpModConvBlock
 from stylegan2_torch.generator.mapping import MappingNetwork
 from stylegan2_torch.generator.rgb import ToRGB
-from stylegan2_torch.utils import Resolution, default_channels
+from stylegan2_torch.utils import Resolution, default_channels, proxy
 from torch import nn
 from torch.functional import Tensor
 from torch.nn.parameter import Parameter
@@ -25,8 +25,7 @@ class ConstantInput(nn.Module):
         # Broadcast constant input to each sample
         return self.input.repeat(input.shape[0], 1, 1, 1)
 
-    def __call__(self, input: Tensor) -> Tensor:
-        return super().__call__(input)
+    __call__ = proxy(forward)
 
 
 class Generator(nn.Module):
@@ -112,7 +111,7 @@ class Generator(nn.Module):
         input_type: Literal["z", "w", "w_plus"] = "z",
         trunc_option: Optional[Tuple[float, Tensor]] = None,
         mix_index: Optional[int] = None,
-        noises: Optional[List[Optional[Tensor]]] = None
+        noises: Optional[List[Optional[Tensor]]] = None,
     ) -> Tensor:
         ...
 
@@ -125,7 +124,7 @@ class Generator(nn.Module):
         input_type: Literal["z", "w", "w_plus"] = "z",
         trunc_option: Optional[Tuple[float, Tensor]] = None,
         mix_index: Optional[int] = None,
-        noises: Optional[List[Optional[Tensor]]] = None
+        noises: Optional[List[Optional[Tensor]]] = None,
     ) -> Tuple[Tensor, Tensor]:
         ...
 
@@ -143,7 +142,7 @@ class Generator(nn.Module):
         # Mixing regularization options
         mix_index: Optional[int] = None,
         # Noise vectors
-        noises: Optional[List[Optional[Tensor]]] = None
+        noises: Optional[List[Optional[Tensor]]] = None,
     ):
         # Get w vectors (can have 2 w vectors for mixing regularization)
         ws: List[Tensor]
@@ -202,31 +201,4 @@ class Generator(nn.Module):
         else:
             return img
 
-    @overload
-    def __call__(
-        self,
-        input: List[Tensor],
-        *,
-        return_latents: Literal[False] = False,
-        input_type: Literal["z", "w", "w_plus"] = "z",
-        trunc_option: Optional[Tuple[float, Tensor]] = None,
-        mix_index: Optional[int] = None,
-        noises: Optional[List[Optional[Tensor]]] = None
-    ) -> Tensor:
-        ...
-
-    @overload
-    def __call__(
-        self,
-        input: List[Tensor],
-        *,
-        return_latents: Literal[True],
-        input_type: Literal["z", "w", "w_plus"] = "z",
-        trunc_option: Optional[Tuple[float, Tensor]] = None,
-        mix_index: Optional[int] = None,
-        noises: Optional[List[Optional[Tensor]]] = None
-    ) -> Tuple[Tensor, Tensor]:
-        ...
-
-    def __call__(self, *args: Any, **kwargs: Any):
-        return super().__call__(*args, **kwargs)
+    __call__ = proxy(forward)

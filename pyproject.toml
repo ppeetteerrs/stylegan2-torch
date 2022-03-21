@@ -1,0 +1,37 @@
+[tool.poetry]
+authors = ["Peter Yuen <ppeetteerrsx@gmail.com>"]
+description = "A simple, typed, commented Pytorch implementation of StyleGAN2."
+documentation = "https://ppeetteerrs.github.io/stylegan2-torch"
+homepage = "https://github.com/ppeetteerrs/stylegan2-torch"
+keywords = []
+license = "MIT"
+name = "stylegan2-torch"
+readme = "README.md"
+repository = "https://github.com/ppeetteerrs/stylegan2-torch"
+version = "0.0.0"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+torch = ">=1.7.0"
+torch-conv-gradfix = ">=0.1.0"
+
+[tool.poetry.dev-dependencies]
+ipykernel = "^6.9.2"
+mkdocs-jupyter = "^0.20.1"
+mkdocs-material = "^8.2.5"
+mkdocstrings-python = "^0.6.6"
+pytest = "^7.1.1"
+pytest-cov = "^3.0.0"
+
+[tool.poetry-dynamic-versioning]
+enable = true
+style = "semver"
+
+[tool.poetry.scripts]
+docs = "stylegan2_torch:__docs"
+serve = "stylegan2_torch:__serve"
+test = "stylegan2_torch:__test"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]

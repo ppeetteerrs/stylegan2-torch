@@ -3,6 +3,7 @@ from typing import List
 
 from stylegan2_torch.equalized_lr import Blur, EqualConv2d
 from stylegan2_torch.op.fused_act import FusedLeakyReLU
+from stylegan2_torch.utils import proxy
 from torch import nn
 from torch.functional import Tensor
 
@@ -114,5 +115,4 @@ class ResBlock(nn.Module):
         # (i.e. preserve variance in forward pass not initialization)
         return (out + skip) / math.sqrt(2)
 
-    def __call__(self, input: Tensor) -> Tensor:
-        return super().__call__(input)
+    __call__ = proxy(forward)

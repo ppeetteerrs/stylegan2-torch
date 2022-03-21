@@ -6,11 +6,11 @@ from torch import nn
 from torch.functional import Tensor
 from torch.nn import functional as F
 from torch.nn.parameter import Parameter
+from torch_conv_gradfix import conv2d
 
-from stylegan2_torch.op.conv2d_gradfix import conv2d
 from stylegan2_torch.op.fused_act import fused_leaky_relu
 from stylegan2_torch.op.upfirdn2d import upfirdn2d
-from stylegan2_torch.utils import make_kernel
+from stylegan2_torch.utils import make_kernel, proxy
 
 
 class EqualConv2d(nn.Module):
@@ -31,7 +31,8 @@ class EqualConv2d(nn.Module):
 
         # Equalized Learning Rate
         self.weight = Parameter(
-            torch.randn(out_channel, in_channel, kernel_size, kernel_size))
+            torch.randn(out_channel, in_channel, kernel_size, kernel_size)
+        )
         # std = gain / sqrt(fan_in)
         self.scale = 1 / math.sqrt(in_channel * kernel_size**2)
         self.stride = stride
@@ -52,6 +53,8 @@ class EqualConv2d(nn.Module):
             f"{self.__class__.__name__}({self.weight.shape[1]}, {self.weight.shape[0]},"
             f" {self.weight.shape[2]}, stride={self.stride}, padding={self.padding})"
         )
+
+    __call__ = proxy(forward)
 
 
 class EqualLinear(nn.Module):
@@ -78,14 +81,14 @@ class EqualLinear(nn.Module):
         self.lr_mult = lr_mult
 
     def forward(self, input: Tensor) -> Tensor:
-        return F.linear(input,
-                        self.weight * self.scale,
-                        bias=self.bias * self.lr_mult)
+        return F.linear(input, self.weight * self.scale, bias=self.bias * self.lr_mult)
 
     def __repr__(self) -> str:
         return (
             f"{self.__class__.__name__}({self.weight.shape[1]}, {self.weight.shape[0]})"
         )
+
+    __call__ = proxy(forward)
 
 
 class EqualLeakyReLU(nn.Module):
@@ -114,9 +117,10 @@ class EqualLeakyReLU(nn.Module):
             f"{self.__class__.__name__}({self.weight.shape[1]}, {self.weight.shape[0]})"
         )
 
+    __call__ = proxy(forward)
+
 
 class Blur(nn.Module):
-
     def __init__(self, blur_kernel: List[int], factor: int, kernel_size: int):
         """
         Apply blurring FIR filter (before / after) a (downsampling / upsampling) op
@@ -160,8 +164,11 @@ class Blur(nn.Module):
         # Factor to compensate for averaging with zeros if upsampling
         self.kernel: Tensor
         self.register_buffer(
-            "kernel", make_kernel(blur_kernel, factor if factor > 0 else 1))
+            "kernel", make_kernel(blur_kernel, factor if factor > 0 else 1)
+        )
         self.pad = (pad0, pad1)
 
     def forward(self, input: Tensor) -> Tensor:
         return upfirdn2d(input, self.kernel, pad=self.pad)
+
+    __call__ = proxy(forward)
