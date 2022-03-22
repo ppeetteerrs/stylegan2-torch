@@ -1740,7 +1740,7 @@ forward
 
         <span class="c1"># Calculate image size and channels at the layer</span>
         <span class="n">prev_layer_size</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="n">layer_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">layer_size</span><span class="p">:</span> <span class="n">Resolution</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="n">layer_idx</span>
+        <span class="n">layer_size</span><span class="p">:</span> <span class="n">Resolution</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">layer_idx</span>
         <span class="n">layer_channel</span> <span class="o">=</span> <span class="n">channels</span><span class="p">[</span><span class="n">layer_size</span><span class="p">]</span>
 
         <span class="c1"># Upsampling Conv Block</span>
@@ -2000,7 +2000,7 @@ forward
 
 </h3>
 <div class="highlight"><pre><span></span><code><span class="n">forward</span><span class="p">(</span>
-    <span class="nb">input</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">],</span>
+    <span class="nb">input</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Tensor</span><span class="p">],</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">return_latents</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">input_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="s2">&quot;w_plus&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span>
@@ -2089,7 +2089,7 @@ forward
 <span class="normal">202</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="c1"># Input tensors (N, latent_dim)</span>
-    <span class="nb">input</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">],</span>
+    <span class="nb">input</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Tensor</span><span class="p">],</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="c1"># Return latents</span>
     <span class="n">return_latents</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -2108,7 +2108,7 @@ forward
     <span class="k">if</span> <span class="n">input_type</span> <span class="o">==</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span>
         <span class="n">ws</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mapping</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">input</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">ws</span> <span class="o">=</span> <span class="nb">input</span>
+        <span class="n">ws</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
 
     <span class="c1"># Perform truncation</span>
     <span class="k">if</span> <span class="n">trunc_option</span><span class="p">:</span>

@@ -846,7 +846,7 @@ make_kernel
     <span class="n">kernel</span> <span class="o">=</span> <span class="n">kernel</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">*</span> <span class="n">kernel</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
 
     <span class="n">kernel</span> <span class="o">/=</span> <span class="n">kernel</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-    <span class="n">kernel</span> <span class="o">*=</span> <span class="n">factor</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">kernel</span> <span class="o">*=</span> <span class="n">factor</span> <span class="o">**</span> <span class="mi">2</span>
 
     <span class="k">return</span> <span class="n">kernel</span>
 </code></pre></div>
@@ -922,19 +922,11 @@ mixing_noise
 <span class="normal">67</span>
 <span class="normal">68</span>
 <span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">mixing_noise</span><span class="p">(</span><span class="n">batch</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">prob</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="normal">70</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">mixing_noise</span><span class="p">(</span><span class="n">batch</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">prob</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Makes a random, normally distributed latent vector. Returns a pair if mixing regularization.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">prob</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">make_noise</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
-
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">make_noise</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">make_noise</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">,</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">prob</span> <span class="k">else</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
         </details>
@@ -962,11 +954,11 @@ proxy
 
         <details class="quote">
           <summary>Source code in <code>stylegan2_torch/utils.py</code></summary>
-          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span>
-<span class="normal">81</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">proxy</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">C</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">C</span><span class="p">:</span>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">proxy</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">C</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">C</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Proxy function signature map for `Module.__call__` type hint.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
