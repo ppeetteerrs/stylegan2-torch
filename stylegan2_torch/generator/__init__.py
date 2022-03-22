@@ -1,6 +1,6 @@
 import math
 import random
-from typing import Dict, List, Literal, Optional, Tuple, overload
+from typing import Dict, List, Literal, Optional, Sequence, Tuple, overload
 
 import torch
 from stylegan2_torch.generator.conv_block import ModConvBlock, UpModConvBlock
@@ -66,7 +66,7 @@ class Generator(nn.Module):
 
             # Calculate image size and channels at the layer
             prev_layer_size = 2 ** (layer_idx - 1)
-            layer_size: Resolution = 2**layer_idx
+            layer_size: Resolution = 2 ** layer_idx
             layer_channel = channels[layer_size]
 
             # Upsampling Conv Block
@@ -105,7 +105,7 @@ class Generator(nn.Module):
     @overload
     def forward(
         self,
-        input: List[Tensor],
+        input: Sequence[Tensor],
         *,
         return_latents: Literal[False] = False,
         input_type: Literal["z", "w", "w_plus"] = "z",
@@ -118,7 +118,7 @@ class Generator(nn.Module):
     @overload
     def forward(
         self,
-        input: List[Tensor],
+        input: Sequence[Tensor],
         *,
         return_latents: Literal[True],
         input_type: Literal["z", "w", "w_plus"] = "z",
@@ -131,7 +131,7 @@ class Generator(nn.Module):
     def forward(
         self,
         # Input tensors (N, latent_dim)
-        input: List[Tensor],
+        input: Sequence[Tensor],
         *,
         # Return latents
         return_latents: bool = False,
@@ -150,7 +150,7 @@ class Generator(nn.Module):
         if input_type == "z":
             ws = [self.mapping(z) for z in input]
         else:
-            ws = input
+            ws = list(input)
 
         # Perform truncation
         if trunc_option:

@@ -1,5 +1,3 @@
-from contextlib import suppress
-from importlib import metadata
 from os import system as shell
 
 from stylegan2_torch.discriminator import Discriminator

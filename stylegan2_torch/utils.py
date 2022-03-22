@@ -35,7 +35,7 @@ def make_kernel(
     kernel = kernel[None, :] * kernel[:, None]
 
     kernel /= kernel.sum()
-    kernel *= factor**2
+    kernel *= factor ** 2
 
     return kernel
 
@@ -67,11 +67,7 @@ def mixing_noise(batch: int, latent_dim: int, prob: float, device: str):
     """
     Makes a random, normally distributed latent vector. Returns a pair if mixing regularization.
     """
-    if random.random() < prob:
-        return make_noise(batch, latent_dim, 2, device)
-
-    else:
-        return [make_noise(batch, latent_dim, 1, device)]
+    return make_noise(batch, latent_dim, 2 if random.random() < prob else 1, device)
 
 
 def proxy(f: C) -> C:
