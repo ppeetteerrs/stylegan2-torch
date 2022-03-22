@@ -822,6 +822,34 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#stylegan2_torch.d_loss" class="md-nav__link">
+    d_loss()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stylegan2_torch.d_reg_loss" class="md-nav__link">
+    d_reg_loss()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stylegan2_torch.g_loss" class="md-nav__link">
+    g_loss()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stylegan2_torch.g_reg_loss" class="md-nav__link">
+    g_reg_loss()
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1409,6 +1437,34 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#stylegan2_torch.d_loss" class="md-nav__link">
+    d_loss()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stylegan2_torch.d_reg_loss" class="md-nav__link">
+    d_reg_loss()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stylegan2_torch.g_loss" class="md-nav__link">
+    g_loss()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stylegan2_torch.g_reg_loss" class="md-nav__link">
+    g_reg_loss()
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1486,6 +1542,10 @@ __all__
     <span class="s2">&quot;EqualConv2d&quot;</span><span class="p">,</span>
     <span class="s2">&quot;EqualLeakyReLU&quot;</span><span class="p">,</span>
     <span class="s2">&quot;EqualLinear&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;d_loss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;d_reg_loss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;g_loss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;g_reg_loss&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 </code></pre></div>
 
@@ -3811,14 +3871,14 @@ __docs
 
         <details class="quote">
           <summary>Source code in <code>stylegan2_torch/__init__.py</code></summary>
-          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">53</span>
 <span class="normal">54</span>
-<span class="normal">55</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">__docs</span><span class="p">():</span>  <span class="c1"># pragma: no cover</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">__docs</span><span class="p">():</span>  <span class="c1"># pragma: no cover</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Build gh-pages documentation branch.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -3853,15 +3913,15 @@ __serve
 
         <details class="quote">
           <summary>Source code in <code>stylegan2_torch/__init__.py</code></summary>
-          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">42</span>
 <span class="normal">43</span>
 <span class="normal">44</span>
-<span class="normal">45</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">__serve</span><span class="p">():</span>  <span class="c1"># pragma: no cover</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">__serve</span><span class="p">():</span>  <span class="c1"># pragma: no cover</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Serve local documentation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -3897,21 +3957,562 @@ __test
 
         <details class="quote">
           <summary>Source code in <code>stylegan2_torch/__init__.py</code></summary>
-          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">32</span>
 <span class="normal">33</span>
-<span class="normal">34</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">__test</span><span class="p">():</span>  <span class="c1"># pragma: no cover</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">__test</span><span class="p">():</span>  <span class="c1"># pragma: no cover</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Runs pytest locally and keeps only `coverage.xml` for GitHub Actions to upload to Codecov.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">shell</span><span class="p">(</span>
-        <span class="s2">&quot;pytest --cov=simple_poetry --cov-report xml --cov-report term-missing tests </span><span class="se">\</span>
+        <span class="s2">&quot;pytest --cov=stylegan2_torch --cov-report xml --cov-report term-missing tests </span><span class="se">\</span>
 <span class="s2">            &amp;&amp; rm -rf .pytest_cache &amp;&amp; rm .coverage&quot;</span>
     <span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="stylegan2_torch.d_loss" class="doc doc-heading">
+d_loss
+
+
+</h2>
+<div class="highlight"><pre><span></span><code><span class="n">d_loss</span><span class="p">(</span><span class="n">real_pred</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">fake_pred</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the discriminator loss.
+(equivalent to adversarial loss in original GAN paper).</p>
+<p>loss = softplus(-f(x)) + softplus(f(x))</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>real_pred</code></td>
+          <td>
+                <code><span title="torch.functional.Tensor">Tensor</span></code>
+          </td>
+          <td><p>Predicted scores for real images</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>fake_pred</code></td>
+          <td>
+                <code><span title="torch.functional.Tensor">Tensor</span></code>
+          </td>
+          <td><p>Predicted scores for fake images</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>Tensor</code></td>          <td>
+                <code><span title="torch.functional.Tensor">Tensor</span></code>
+          </td>
+          <td><p>Discriminator loss</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+        <details class="quote">
+          <summary>Source code in <code>stylegan2_torch/loss.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">d_loss</span><span class="p">(</span>
+    <span class="n">real_pred</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">fake_pred</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the discriminator loss.</span>
+<span class="sd">    (equivalent to adversarial loss in original GAN paper).</span>
+
+<span class="sd">    loss = softplus(-f(x)) + softplus(f(x))</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        real_pred (Tensor): Predicted scores for real images</span>
+<span class="sd">        fake_pred (Tensor): Predicted scores for fake images</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tensor: Discriminator loss</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">real_loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softplus</span><span class="p">(</span><span class="o">-</span><span class="n">real_pred</span><span class="p">)</span>
+    <span class="n">fake_loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softplus</span><span class="p">(</span><span class="n">fake_pred</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">real_loss</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="n">fake_loss</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="stylegan2_torch.d_reg_loss" class="doc doc-heading">
+d_reg_loss
+
+
+</h2>
+<div class="highlight"><pre><span></span><code><span class="n">d_reg_loss</span><span class="p">(</span><span class="n">real_pred</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">real_img</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+<details class="note">
+  <summary>Note</summary>
+  <p>The loss function was first proposed in <a href="https://arxiv.org/pdf/1801.04406.pdf">https://arxiv.org/pdf/1801.04406.pdf</a>.
+This regularization term penalizes the discriminator from producing a gradient orthogonal to the true data manifold
+(i.e. Expected gradient w.r.t. real image distribution should be zero). This means that:</p>
+<ol>
+<li>Discriminator score cannot improve once generator reaches true data distribution (because discriminator gives same expected score if inputs are from sample distribution, based on this regularization term)</li>
+<li>Near Nash equilibrium, discriminator is encouraged to minimize the gradient magnitude (because adversarial loss cannot improve, see 1)</li>
+</ol>
+<p>Points 1 and 2 are sort of chicken-and-egg in nature but the idea is to help converge to the Nash equilibrium.</p>
+</details>      <p>Calculates the discriminator R_1 loss.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>stylegan2_torch/loss.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">d_reg_loss</span><span class="p">(</span><span class="n">real_pred</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">real_img</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the discriminator R_1 loss.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        The loss function was first proposed in [https://arxiv.org/pdf/1801.04406.pdf](https://arxiv.org/pdf/1801.04406.pdf).</span>
+<span class="sd">        This regularization term penalizes the discriminator from producing a gradient orthogonal to the true data manifold</span>
+<span class="sd">        (i.e. Expected gradient w.r.t. real image distribution should be zero). This means that:</span>
+
+<span class="sd">        1. Discriminator score cannot improve once generator reaches true data distribution (because discriminator gives same expected score if inputs are from sample distribution, based on this regularization term)</span>
+<span class="sd">        2. Near Nash equilibrium, discriminator is encouraged to minimize the gradient magnitude (because adversarial loss cannot improve, see 1)</span>
+
+<span class="sd">        Points 1 and 2 are sort of chicken-and-egg in nature but the idea is to help converge to the Nash equilibrium.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Gradients w.r.t. convolution weights are not needed since only gradients w.r.t. input images are propagated</span>
+    <span class="k">with</span> <span class="n">no_weight_grad</span><span class="p">():</span>
+        <span class="c1"># create_graph = true because we still need to use this gradient to perform backpropagation</span>
+        <span class="c1"># real_pred.sum() is needed to obtain a scalar, but does not affect gradients (since each sample independently contributes to output)</span>
+        <span class="p">(</span><span class="n">grad_real</span><span class="p">,)</span> <span class="o">=</span> <span class="n">autograd</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span>
+            <span class="n">outputs</span><span class="o">=</span><span class="n">real_pred</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">inputs</span><span class="o">=</span><span class="n">real_img</span><span class="p">,</span> <span class="n">create_graph</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+    <span class="n">grad_penalty</span> <span class="o">=</span> <span class="n">grad_real</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">grad_real</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">grad_penalty</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="stylegan2_torch.g_loss" class="doc doc-heading">
+g_loss
+
+
+</h2>
+<div class="highlight"><pre><span></span><code><span class="n">g_loss</span><span class="p">(</span><span class="n">fake_pred</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the generator loss.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>fake_pred</code></td>
+          <td>
+                <code><span title="torch.functional.Tensor">Tensor</span></code>
+          </td>
+          <td><p>Predicted scores for fake images</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>Tensor</code></td>          <td>
+                <code><span title="torch.functional.Tensor">Tensor</span></code>
+          </td>
+          <td><p>Generator loss</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+        <details class="quote">
+          <summary>Source code in <code>stylegan2_torch/loss.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">g_loss</span><span class="p">(</span><span class="n">fake_pred</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the generator loss.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fake_pred (Tensor): Predicted scores for fake images</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tensor: Generator loss</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softplus</span><span class="p">(</span><span class="o">-</span><span class="n">fake_pred</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">loss</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="stylegan2_torch.g_reg_loss" class="doc doc-heading">
+g_reg_loss
+
+
+</h2>
+<div class="highlight"><pre><span></span><code><span class="n">g_reg_loss</span><span class="p">(</span>
+    <span class="n">fake_img</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">latents</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">mean_path_length</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Literal</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+    <span class="n">decay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates Generator path length regularization loss.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>fake_img</code></td>
+          <td>
+                <code><span title="torch.functional.Tensor">Tensor</span></code>
+          </td>
+          <td><p>Generated images (N, C, H, W)</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>latents</code></td>
+          <td>
+                <code><span title="torch.functional.Tensor">Tensor</span></code>
+          </td>
+          <td><p>W+ latent vectors (N, P, 512), P = number of style vectors</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>mean_path_length</code></td>
+          <td>
+                <code><span title="typing.Union">Union</span>[<span title="torch.functional.Tensor">Tensor</span>, <span title="typing.Literal">Literal</span>[0]]</code>
+          </td>
+          <td><p>Current accumulated mean path length (dynamic <code>a</code>)</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>decay</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td><p>Decay in accumulating <code>a</code>. Defaults to 0.01.</p></td>
+          <td>
+                <code>0.01</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.Tuple">Tuple</span>[<span title="torch.functional.Tensor">Tensor</span>, <span title="torch.functional.Tensor">Tensor</span>, <span title="torch.functional.Tensor">Tensor</span>]</code>
+          </td>
+          <td><p>Tuple[Tensor, Tensor, Tensor]: Path loss, mean path, path length</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+<details class="note">
+  <summary>Note</summary>
+  <p>This loss function was first introduced in StyleGAN2.
+The idea is that fixed-sized steps in W results in fixed-magnitude change in image.</p>
+<p><strong>Key Intuition</strong>: minimizing <span class="arithmatex">\(\mathbb{E}_{\mathbf{w},\mathbf{y}~N(0,1)}(||\mathbf{J^T_{\mathbf{w}}\mathbf{y}}||_2 - a)^2\)</span> is equivalent to scaling <span class="arithmatex">\(W+\)</span> equally in each dimension.</p>
+<p>Reason:</p>
+<ol>
+<li>Do SVD on <span class="arithmatex">\(\mathbf{J^T_{\mathbf{w}}} = U \bar{\Sigma} V^T\)</span></li>
+<li><span class="arithmatex">\(U\)</span> and <span class="arithmatex">\(V\)</span> are orthogonal and hence irrelevant (since orthogonal matrices simply rotates the vector, but <span class="arithmatex">\(\mathbf{y}\)</span> is N(0,1), it is still the same distribution after rotation)</li>
+<li><span class="arithmatex">\(\bar{\Sigma}\)</span> has <span class="arithmatex">\(L\)</span> non-zero singular values representing scaling factor in <span class="arithmatex">\(L\)</span> dimensions</li>
+<li>Loss is minimized when <span class="arithmatex">\(\bar{\Sigma}\)</span> has identical singular values equal <span class="arithmatex">\(\frac{a}{\sqrt{L}}\)</span> (because high-dimensional normal distributions have norm centered around <span class="arithmatex">\(\sqrt{L}\)</span>)</li>
+</ol>
+</details>
+<details class="info">
+  <summary>Info</summary>
+  <p>Implementation:</p>
+<ol>
+<li><span class="arithmatex">\(a\)</span> is set dynamically using the moving average of the path_lengths (sort of like searching for the appropriate scaling factor in an non-agressive manner).</li>
+<li>As explained in paper's Appendix B, ideal weight for path regularization is <span class="arithmatex">\(\gamma_{pl} = \frac{\ln 2}{r^2(\ln r - \ln 2)}\)</span>. This is achieved by setting <code>pl_weight</code>, then in the code, the loss is first scaled by <span class="arithmatex">\(r^2\)</span> (i.e. height * width) in <code>noise</code> then by <code>n_layers</code> in <code>path_lengths</code> by taken mean over the <code>n_layers</code> style vectors. Resulting is equivalent as saying that idea <code>pl_weight</code> is 2. See <a href="https://github.com/NVlabs/stylegan2/blob/master/training/loss.py">here</a>.</li>
+<li><code>path_batch_shrink</code> controls the fraction of batch size to use to reduce memory footprint of regularization. Since it is done without freeing the memory of the existing batch.</li>
+<li>Identity <span class="arithmatex">\(\mathbf{J^T_{\mathbf{w}}} \mathbf{y} = \nabla (g(\mathbf{w}) \mathbf{y})\)</span></li>
+</ol>
+</details>
+        <details class="quote">
+          <summary>Source code in <code>stylegan2_torch/loss.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">g_reg_loss</span><span class="p">(</span>
+    <span class="n">fake_img</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">latents</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">mean_path_length</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Literal</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+    <span class="n">decay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates Generator path length regularization loss.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fake_img (Tensor): Generated images (N, C, H, W)</span>
+<span class="sd">        latents (Tensor): W+ latent vectors (N, P, 512), P = number of style vectors</span>
+<span class="sd">        mean_path_length (Union[Tensor, Literal[0]]): Current accumulated mean path length (dynamic `a`)</span>
+<span class="sd">        decay (float, optional): Decay in accumulating `a`. Defaults to 0.01.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[Tensor, Tensor, Tensor]: Path loss, mean path, path length</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        This loss function was first introduced in StyleGAN2.</span>
+<span class="sd">        The idea is that fixed-sized steps in W results in fixed-magnitude change in image.</span>
+
+<span class="sd">        **Key Intuition**: minimizing $\mathbb{E}_{\mathbf{w},\mathbf{y}~N(0,1)}(||\mathbf{J^T_{\mathbf{w}}\mathbf{y}}||_2 - a)^2$ is equivalent to scaling $W+$ equally in each dimension.</span>
+
+<span class="sd">        Reason:</span>
+
+<span class="sd">        1. Do SVD on $\mathbf{J^T_{\mathbf{w}}} = U \\bar{\Sigma} V^T$</span>
+<span class="sd">        2. $U$ and $V$ are orthogonal and hence irrelevant (since orthogonal matrices simply rotates the vector, but $\mathbf{y}$ is N(0,1), it is still the same distribution after rotation)</span>
+<span class="sd">        3. $\\bar{\Sigma}$ has $L$ non-zero singular values representing scaling factor in $L$ dimensions</span>
+<span class="sd">        4. Loss is minimized when $\\bar{\Sigma}$ has identical singular values equal $\\frac{a}{\sqrt{L}}$ (because high-dimensional normal distributions have norm centered around $\sqrt{L}$)</span>
+
+<span class="sd">    Info:</span>
+<span class="sd">        Implementation:</span>
+
+<span class="sd">        1. $a$ is set dynamically using the moving average of the path_lengths (sort of like searching for the appropriate scaling factor in an non-agressive manner).</span>
+<span class="sd">        2. As explained in paper&#39;s Appendix B, ideal weight for path regularization is $\gamma_{pl} = \\frac{\ln 2}{r^2(\ln r - \ln 2)}$. This is achieved by setting `pl_weight`, then in the code, the loss is first scaled by $r^2$ (i.e. height * width) in `noise` then by `n_layers` in `path_lengths` by taken mean over the `n_layers` style vectors. Resulting is equivalent as saying that idea `pl_weight` is 2. See [here](https://github.com/NVlabs/stylegan2/blob/master/training/loss.py).</span>
+<span class="sd">        3. `path_batch_shrink` controls the fraction of batch size to use to reduce memory footprint of regularization. Since it is done without freeing the memory of the existing batch.</span>
+<span class="sd">        4. Identity $\mathbf{J^T_{\mathbf{w}}} \mathbf{y} = \\nabla (g(\mathbf{w}) \mathbf{y})$</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">noise</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">fake_img</span><span class="p">)</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+        <span class="n">fake_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">fake_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="p">(</span><span class="n">grad</span><span class="p">,)</span> <span class="o">=</span> <span class="n">autograd</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span>
+        <span class="n">outputs</span><span class="o">=</span><span class="p">(</span><span class="n">fake_img</span> <span class="o">*</span> <span class="n">noise</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">inputs</span><span class="o">=</span><span class="n">latents</span><span class="p">,</span> <span class="n">create_graph</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">path_lengths</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">grad</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">path_mean</span> <span class="o">=</span> <span class="n">mean_path_length</span> <span class="o">+</span> <span class="n">decay</span> <span class="o">*</span> <span class="p">(</span><span class="n">path_lengths</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">mean_path_length</span><span class="p">)</span>
+
+    <span class="n">path_penalty</span> <span class="o">=</span> <span class="p">(</span><span class="n">path_lengths</span> <span class="o">-</span> <span class="n">path_mean</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">path_penalty</span><span class="p">,</span> <span class="n">path_mean</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">path_lengths</span>
 </code></pre></div>
 </td></tr></table>
         </details>
