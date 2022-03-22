@@ -1,0 +1,2289 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://ppeetteerrs.github.io/stylegan2-torch/equalized_lr/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.5">
+    
+    
+      
+        <title>equalized_lr - stylegan2-torch</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.2d9f7617.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#stylegan2_torch.equalized_lr.Blur" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="stylegan2-torch" class="md-header__button md-logo" aria-label="stylegan2-torch" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            stylegan2-torch
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              equalized_lr
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ppeetteerrs/stylegan2-torch" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href=".." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../all/" class="md-tabs__link md-tabs__link--active">
+        API Reference
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="https://github.com/ppeetteerrs/torch-conv-gradfix/issues" class="md-tabs__link">
+      Report Issues
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="stylegan2-torch" class="md-nav__button md-logo" aria-label="stylegan2-torch" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    stylegan2-torch
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ppeetteerrs/stylegan2-torch" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          API Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../all/" class="md-nav__link">
+        __all__
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generator/" class="md-nav__link">
+        generator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discriminator/" class="md-nav__link">
+        discriminator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          equalized_lr
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        equalized_lr
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.Blur" class="md-nav__link">
+    Blur
+  </a>
+  
+    <nav class="md-nav" aria-label="Blur">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.Blur.__call__" class="md-nav__link">
+    __call__
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.Blur.kernel" class="md-nav__link">
+    kernel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.Blur.pad" class="md-nav__link">
+    pad
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.Blur.forward" class="md-nav__link">
+    forward()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d" class="md-nav__link">
+    EqualConv2d
+  </a>
+  
+    <nav class="md-nav" aria-label="EqualConv2d">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d.__call__" class="md-nav__link">
+    __call__
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d.bias" class="md-nav__link">
+    bias
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d.padding" class="md-nav__link">
+    padding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d.scale" class="md-nav__link">
+    scale
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d.stride" class="md-nav__link">
+    stride
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d.weight" class="md-nav__link">
+    weight
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d.__repr__" class="md-nav__link">
+    __repr__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d.forward" class="md-nav__link">
+    forward()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLeakyReLU" class="md-nav__link">
+    EqualLeakyReLU
+  </a>
+  
+    <nav class="md-nav" aria-label="EqualLeakyReLU">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLeakyReLU.__call__" class="md-nav__link">
+    __call__
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLeakyReLU.bias" class="md-nav__link">
+    bias
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLeakyReLU.lr_mult" class="md-nav__link">
+    lr_mult
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLeakyReLU.scale" class="md-nav__link">
+    scale
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLeakyReLU.weight" class="md-nav__link">
+    weight
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLeakyReLU.__repr__" class="md-nav__link">
+    __repr__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLeakyReLU.forward" class="md-nav__link">
+    forward()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLinear" class="md-nav__link">
+    EqualLinear
+  </a>
+  
+    <nav class="md-nav" aria-label="EqualLinear">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLinear.__call__" class="md-nav__link">
+    __call__
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLinear.bias" class="md-nav__link">
+    bias
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLinear.lr_mult" class="md-nav__link">
+    lr_mult
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLinear.scale" class="md-nav__link">
+    scale
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLinear.weight" class="md-nav__link">
+    weight
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLinear.__repr__" class="md-nav__link">
+    __repr__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLinear.forward" class="md-nav__link">
+    forward()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../loss/" class="md-nav__link">
+        loss
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utils/" class="md-nav__link">
+        utils
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/ppeetteerrs/torch-conv-gradfix/issues" class="md-nav__link">
+        Report Issues
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.Blur" class="md-nav__link">
+    Blur
+  </a>
+  
+    <nav class="md-nav" aria-label="Blur">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.Blur.__call__" class="md-nav__link">
+    __call__
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.Blur.kernel" class="md-nav__link">
+    kernel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.Blur.pad" class="md-nav__link">
+    pad
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.Blur.forward" class="md-nav__link">
+    forward()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d" class="md-nav__link">
+    EqualConv2d
+  </a>
+  
+    <nav class="md-nav" aria-label="EqualConv2d">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d.__call__" class="md-nav__link">
+    __call__
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d.bias" class="md-nav__link">
+    bias
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d.padding" class="md-nav__link">
+    padding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d.scale" class="md-nav__link">
+    scale
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d.stride" class="md-nav__link">
+    stride
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d.weight" class="md-nav__link">
+    weight
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d.__repr__" class="md-nav__link">
+    __repr__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualConv2d.forward" class="md-nav__link">
+    forward()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLeakyReLU" class="md-nav__link">
+    EqualLeakyReLU
+  </a>
+  
+    <nav class="md-nav" aria-label="EqualLeakyReLU">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLeakyReLU.__call__" class="md-nav__link">
+    __call__
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLeakyReLU.bias" class="md-nav__link">
+    bias
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLeakyReLU.lr_mult" class="md-nav__link">
+    lr_mult
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLeakyReLU.scale" class="md-nav__link">
+    scale
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLeakyReLU.weight" class="md-nav__link">
+    weight
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLeakyReLU.__repr__" class="md-nav__link">
+    __repr__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLeakyReLU.forward" class="md-nav__link">
+    forward()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLinear" class="md-nav__link">
+    EqualLinear
+  </a>
+  
+    <nav class="md-nav" aria-label="EqualLinear">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLinear.__call__" class="md-nav__link">
+    __call__
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLinear.bias" class="md-nav__link">
+    bias
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLinear.lr_mult" class="md-nav__link">
+    lr_mult
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLinear.scale" class="md-nav__link">
+    scale
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLinear.weight" class="md-nav__link">
+    weight
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLinear.__repr__" class="md-nav__link">
+    __repr__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylegan2_torch.equalized_lr.EqualLinear.forward" class="md-nav__link">
+    forward()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>equalized_lr</h1>
+
+<div class="doc doc-object doc-module">
+
+
+    <div class="doc doc-contents first">
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 id="stylegan2_torch.equalized_lr.Blur" class="doc doc-heading">
+          <code>Blur</code>
+
+
+
+</h2>
+<div class="highlight"><pre><span></span><code><span class="n">Blur</span><span class="p">(</span><span class="n">blur_kernel</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">factor</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+        <p class="doc doc-class-bases">
+          Bases: <code><span title="torch.nn">nn</span>.<span title="torch.nn.Module">Module</span></code></p>
+
+
+
+
+
+<details class="case-1">
+  <summary>Upsample (factor &gt; 0)</summary>
+  <p>Applied after a transpose convolution of stride U and kernel size K</p>
+</details>      <p>Apply blurring FIR filter (before / after) a (downsampling / upsampling) op</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>input</code></td>
+          <td>
+                <code><span title="torch.functional.Tensor">Tensor</span></code>
+          </td>
+          <td><p>(N, C, (H - 1) * U + K - 1 + 1, (W - 1) * U + K - 1 + 1)</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>blur_kernel</code></td>
+          <td>
+                <code><span title="torch.functional.Tensor">Tensor</span></code>
+          </td>
+          <td><p>FIR filter</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>factor</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>U. Defaults to 2.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>kernel_size</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>K. Defaults to 3.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>Tensor</code></td>          <td>
+          </td>
+          <td><p>(N, C, H * U, W * U)</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+<details class="case-2">
+  <summary>Downsample (factor &lt; 0)</summary>
+  <p>Applied before a convolution of stride U and kernel size K</p>
+</details>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>input</code></td>
+          <td>
+                <code><span title="torch.functional.Tensor">Tensor</span></code>
+          </td>
+          <td><p>(N, C, H, W)</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>blur_kernel</code></td>
+          <td>
+                <code><span title="torch.functional.Tensor">Tensor</span></code>
+          </td>
+          <td><p>FIR filter</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>factor</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>U. Defaults to 2.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>kernel_size</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>K. Defaults to 3.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>Tensor</code></td>          <td>
+          </td>
+          <td><p>(N, C, H - (U + 1) + K - 1, H  - (U + 1) + K - 1)</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+            <details class="quote">
+              <summary>Source code in <code>stylegan2_torch/equalized_lr.py</code></summary>
+              <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blur_kernel</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">factor</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Apply blurring FIR filter (before / after) a (downsampling / upsampling) op</span>
+
+<span class="sd">    Case 1: Upsample (factor &gt; 0)</span>
+<span class="sd">        Applied after a transpose convolution of stride U and kernel size K</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        input (Tensor): (N, C, (H - 1) * U + K - 1 + 1, (W - 1) * U + K - 1 + 1)</span>
+<span class="sd">        blur_kernel (Tensor): FIR filter</span>
+<span class="sd">        factor (int, optional): U. Defaults to 2.</span>
+<span class="sd">        kernel_size (int, optional): K. Defaults to 3.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tensor: (N, C, H * U, W * U)</span>
+
+
+<span class="sd">    Case 2: Downsample (factor &lt; 0)</span>
+<span class="sd">        Applied before a convolution of stride U and kernel size K</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        input (Tensor): (N, C, H, W)</span>
+<span class="sd">        blur_kernel (Tensor): FIR filter</span>
+<span class="sd">        factor (int, optional): U. Defaults to 2.</span>
+<span class="sd">        kernel_size (int, optional): K. Defaults to 3.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tensor: (N, C, H - (U + 1) + K - 1, H  - (U + 1) + K - 1)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">factor</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">blur_kernel</span><span class="p">)</span> <span class="o">-</span> <span class="n">factor</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">kernel_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">pad0</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">factor</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">pad1</span> <span class="o">=</span> <span class="n">p</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">blur_kernel</span><span class="p">)</span> <span class="o">-</span> <span class="nb">abs</span><span class="p">(</span><span class="n">factor</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">kernel_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">pad0</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">pad1</span> <span class="o">=</span> <span class="n">p</span> <span class="o">//</span> <span class="mi">2</span>
+
+    <span class="c1"># Factor to compensate for averaging with zeros if upsampling</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">:</span> <span class="n">Tensor</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span>
+        <span class="s2">&quot;kernel&quot;</span><span class="p">,</span> <span class="n">make_kernel</span><span class="p">(</span><span class="n">blur_kernel</span><span class="p">,</span> <span class="n">factor</span> <span class="k">if</span> <span class="n">factor</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pad</span> <span class="o">=</span> <span class="p">(</span><span class="n">pad0</span><span class="p">,</span> <span class="n">pad1</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+            </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.Blur.__call__" class="doc doc-heading">
+__call__
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="fm">__call__</span> <span class="o">=</span> <span class="n">proxy</span><span class="p">(</span><span class="n">forward</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.Blur.kernel" class="doc doc-heading">
+kernel
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">kernel</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.Blur.pad" class="doc doc-heading">
+pad
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">pad</span> <span class="o">=</span> <span class="p">(</span><span class="n">pad0</span><span class="p">,</span> <span class="n">pad1</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.Blur.forward" class="doc doc-heading">
+forward
+
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">forward</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>stylegan2_torch/equalized_lr.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">171</span>
+<span class="normal">172</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">upfirdn2d</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pad</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 id="stylegan2_torch.equalized_lr.EqualConv2d" class="doc doc-heading">
+          <code>EqualConv2d</code>
+
+
+
+</h2>
+<div class="highlight"><pre><span></span><code><span class="n">EqualConv2d</span><span class="p">(</span>
+    <span class="n">in_channel</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">out_channel</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">stride</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">padding</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+        <p class="doc doc-class-bases">
+          Bases: <code><span title="torch.nn">nn</span>.<span title="torch.nn.Module">Module</span></code></p>
+
+
+      <p>Conv2d with equalized learning rate</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>stylegan2_torch/equalized_lr.py</code></summary>
+              <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">in_channel</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">out_channel</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">stride</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">padding</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+    <span class="c1"># Equalized Learning Rate</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">out_channel</span><span class="p">,</span> <span class="n">in_channel</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="c1"># std = gain / sqrt(fan_in)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">in_channel</span> <span class="o">*</span> <span class="n">kernel_size</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">padding</span> <span class="o">=</span> <span class="n">padding</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">out_channel</span><span class="p">))</span> <span class="k">if</span> <span class="n">bias</span> <span class="k">else</span> <span class="kc">None</span>
+</code></pre></div>
+</td></tr></table>
+            </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualConv2d.__call__" class="doc doc-heading">
+__call__
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="fm">__call__</span> <span class="o">=</span> <span class="n">proxy</span><span class="p">(</span><span class="n">forward</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualConv2d.bias" class="doc doc-heading">
+bias
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">bias</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">out_channel</span><span class="p">))</span> <span class="k">if</span> <span class="n">bias</span> <span class="k">else</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualConv2d.padding" class="doc doc-heading">
+padding
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">padding</span> <span class="o">=</span> <span class="n">padding</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualConv2d.scale" class="doc doc-heading">
+scale
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">in_channel</span> <span class="o">*</span> <span class="n">kernel_size</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualConv2d.stride" class="doc doc-heading">
+stride
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualConv2d.weight" class="doc doc-heading">
+weight
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">weight</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span>
+        <span class="n">out_channel</span><span class="p">,</span> <span class="n">in_channel</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">kernel_size</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualConv2d.__repr__" class="doc doc-heading">
+__repr__
+
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="fm">__repr__</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>stylegan2_torch/equalized_lr.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">,&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">, stride=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="si">}</span><span class="s2">, padding=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualConv2d.forward" class="doc doc-heading">
+forward
+
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">forward</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>stylegan2_torch/equalized_lr.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">conv2d</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span>
+        <span class="n">weight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span>
+        <span class="n">bias</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">,</span>
+        <span class="n">stride</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
+        <span class="n">padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 id="stylegan2_torch.equalized_lr.EqualLeakyReLU" class="doc doc-heading">
+          <code>EqualLeakyReLU</code>
+
+
+
+</h2>
+<div class="highlight"><pre><span></span><code><span class="n">EqualLeakyReLU</span><span class="p">(</span>
+    <span class="n">in_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">out_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">lr_mult</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+        <p class="doc doc-class-bases">
+          Bases: <code><span title="torch.nn">nn</span>.<span title="torch.nn.Module">Module</span></code></p>
+
+
+      <p>Leaky ReLU with equalized learning rate</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>stylegan2_torch/equalized_lr.py</code></summary>
+              <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">out_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">lr_mult</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+    <span class="c1"># Equalized Learning Rate</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">out_dim</span><span class="p">,</span> <span class="n">in_dim</span><span class="p">)</span><span class="o">.</span><span class="n">div_</span><span class="p">(</span><span class="n">lr_mult</span><span class="p">))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">out_dim</span><span class="p">))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">in_dim</span><span class="p">))</span> <span class="o">*</span> <span class="n">lr_mult</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">lr_mult</span> <span class="o">=</span> <span class="n">lr_mult</span>
+</code></pre></div>
+</td></tr></table>
+            </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualLeakyReLU.__call__" class="doc doc-heading">
+__call__
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="fm">__call__</span> <span class="o">=</span> <span class="n">proxy</span><span class="p">(</span><span class="n">forward</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualLeakyReLU.bias" class="doc doc-heading">
+bias
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">bias</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">out_dim</span><span class="p">))</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualLeakyReLU.lr_mult" class="doc doc-heading">
+lr_mult
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">lr_mult</span> <span class="o">=</span> <span class="n">lr_mult</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualLeakyReLU.scale" class="doc doc-heading">
+scale
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">in_dim</span><span class="p">)</span> <span class="o">*</span> <span class="n">lr_mult</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualLeakyReLU.weight" class="doc doc-heading">
+weight
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">weight</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">out_dim</span><span class="p">,</span> <span class="n">in_dim</span><span class="p">)</span><span class="o">.</span><span class="n">div_</span><span class="p">(</span><span class="n">lr_mult</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualLeakyReLU.__repr__" class="doc doc-heading">
+__repr__
+
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="fm">__repr__</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>stylegan2_torch/equalized_lr.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualLeakyReLU.forward" class="doc doc-heading">
+forward
+
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">forward</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>stylegan2_torch/equalized_lr.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fused_leaky_relu</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr_mult</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 id="stylegan2_torch.equalized_lr.EqualLinear" class="doc doc-heading">
+          <code>EqualLinear</code>
+
+
+
+</h2>
+<div class="highlight"><pre><span></span><code><span class="n">EqualLinear</span><span class="p">(</span>
+    <span class="n">in_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">out_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">bias_init</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">lr_mult</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+        <p class="doc doc-class-bases">
+          Bases: <code><span title="torch.nn">nn</span>.<span title="torch.nn.Module">Module</span></code></p>
+
+
+      <p>Linear with equalized learning rate</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>stylegan2_torch/equalized_lr.py</code></summary>
+              <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">in_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">out_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">bias_init</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">lr_mult</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+    <span class="c1"># Equalized Learning Rate</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">out_dim</span><span class="p">,</span> <span class="n">in_dim</span><span class="p">)</span><span class="o">.</span><span class="n">div_</span><span class="p">(</span><span class="n">lr_mult</span><span class="p">))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">out_dim</span><span class="p">)</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="n">bias_init</span><span class="p">))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">in_dim</span><span class="p">))</span> <span class="o">*</span> <span class="n">lr_mult</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">lr_mult</span> <span class="o">=</span> <span class="n">lr_mult</span>
+</code></pre></div>
+</td></tr></table>
+            </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualLinear.__call__" class="doc doc-heading">
+__call__
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="fm">__call__</span> <span class="o">=</span> <span class="n">proxy</span><span class="p">(</span><span class="n">forward</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualLinear.bias" class="doc doc-heading">
+bias
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">bias</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">out_dim</span><span class="p">)</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="n">bias_init</span><span class="p">))</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualLinear.lr_mult" class="doc doc-heading">
+lr_mult
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">lr_mult</span> <span class="o">=</span> <span class="n">lr_mult</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualLinear.scale" class="doc doc-heading">
+scale
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">in_dim</span><span class="p">)</span> <span class="o">*</span> <span class="n">lr_mult</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualLinear.weight" class="doc doc-heading">
+weight
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">weight</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">out_dim</span><span class="p">,</span> <span class="n">in_dim</span><span class="p">)</span><span class="o">.</span><span class="n">div_</span><span class="p">(</span><span class="n">lr_mult</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualLinear.__repr__" class="doc doc-heading">
+__repr__
+
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="fm">__repr__</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>stylegan2_torch/equalized_lr.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="stylegan2_torch.equalized_lr.EqualLinear.forward" class="doc doc-heading">
+forward
+
+
+</h3>
+<div class="highlight"><pre><span></span><code><span class="n">forward</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>stylegan2_torch/equalized_lr.py</code></summary>
+          <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">83</span>
+<span class="normal">84</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr_mult</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../discriminator/" class="md-footer__link md-footer__link--prev" aria-label="Previous: discriminator" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              discriminator
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../loss/" class="md-footer__link md-footer__link--next" aria-label="Next: loss" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              loss
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.instant", "navigation.expand", "search.suggest"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.467223ff.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+      
+    
+  </body>
+</html>
