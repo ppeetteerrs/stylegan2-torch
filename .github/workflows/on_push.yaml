@@ -59,7 +59,7 @@ jobs:
       - uses: Jimver/cuda-toolkit@v0.2.5
         id: cuda-toolkit
         with:
-          cuda: "11.5.1"
+          cuda: "10.2"
       - name: Run Tests
         run: |
           python -m pip install --upgrade pip
@@ -84,7 +84,7 @@ jobs:
       - uses: Jimver/cuda-toolkit@v0.2.5
         id: cuda-toolkit
         with:
-          cuda: "11.5.1"
+          cuda: "10.2"
       - name: Build Docs
         run: |
           python -m pip install --upgrade pip
