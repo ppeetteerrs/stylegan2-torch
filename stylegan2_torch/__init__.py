@@ -5,6 +5,7 @@ from os import system as shell
 from stylegan2_torch.discriminator import Discriminator
 from stylegan2_torch.equalized_lr import Blur, EqualConv2d, EqualLeakyReLU, EqualLinear
 from stylegan2_torch.generator import Generator
+from stylegan2_torch.loss import d_loss, d_reg_loss, g_loss, g_reg_loss
 from stylegan2_torch.utils import Resolution, default_channels
 
 __author__ = "Peter Yuen"
@@ -21,6 +22,10 @@ __all__ = [
     "EqualConv2d",
     "EqualLeakyReLU",
     "EqualLinear",
+    "d_loss",
+    "d_reg_loss",
+    "g_loss",
+    "g_reg_loss",
 ]
 
 
