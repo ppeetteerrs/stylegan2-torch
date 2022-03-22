@@ -75,6 +75,8 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.8
+      - name: Setup Ninja
+        uses: ashutoshvarma/setup-ninja@master
       - name: Build Docs
         run: |
           python -m pip install --upgrade pip
