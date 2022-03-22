@@ -9,9 +9,7 @@ from stylegan2_torch.utils import Resolution, default_channels
 
 __author__ = "Peter Yuen"
 __email__ = "ppeetteerrsx@gmail.com"
-__version__ = "test"
-with suppress(Exception):
-    __version__ = metadata.version("stylegan2_torch")
+__version__ = "0.0.0"
 
 
 __all__ = [
@@ -31,7 +29,7 @@ def __test():  # pragma: no cover
     Runs pytest locally and keeps only `coverage.xml` for GitHub Actions to upload to Codecov.
     """
     shell(
-        "pytest --cov=simple_poetry --cov-report xml --cov-report term-missing tests \
+        "pytest --cov=stylegan2_torch --cov-report xml --cov-report term-missing tests \
             && rm -rf .pytest_cache && rm .coverage"
     )
 

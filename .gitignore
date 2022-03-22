@@ -153,3 +153,7 @@ cython_debug/
 .vscode
 poetry.lock
 dist
+
+docs/index.md
+
+.ssh
