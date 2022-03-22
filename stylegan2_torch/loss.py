@@ -109,7 +109,7 @@ def g_reg_loss(
         Implementation:
 
         1. $a$ is set dynamically using the moving average of the path_lengths (sort of like searching for the appropriate scaling factor in an non-agressive manner).
-        2. As explained in paper's Appendix B, ideal weight for path regularization is $\gamma_{pl} = \\frac{\ln 2}{r^2(\ln r - \ln 2)}$. This is achieved by setting `pl_weight`, then in the code, the loss is first scaled by $r^2$ (i.e. height * width) in `noise` then by `n_layers` in `path_lengths` by taken mean over the `n_layers` style vectors. Resulting is equivalent as saying that idea `pl_weight` is 2.
+        2. As explained in paper's Appendix B, ideal weight for path regularization is $\gamma_{pl} = \\frac{\ln 2}{r^2(\ln r - \ln 2)}$. This is achieved by setting `pl_weight`, then in the code, the loss is first scaled by $r^2$ (i.e. height * width) in `noise` then by `n_layers` in `path_lengths` by taken mean over the `n_layers` style vectors. Resulting is equivalent as saying that idea `pl_weight` is 2. See [here](https://github.com/NVlabs/stylegan2/blob/master/training/loss.py).
         3. `path_batch_shrink` controls the fraction of batch size to use to reduce memory footprint of regularization. Since it is done without freeing the memory of the existing batch.
         4. Identity $\mathbf{J^T_{\mathbf{w}}} \mathbf{y} = \\nabla (g(\mathbf{w}) \mathbf{y})$
 
