@@ -75,7 +75,7 @@ nav:
           - equalized_lr: equalized_lr.md
           - loss: loss.md
           - utils: utils.md
-    - Report Issues: https://github.com/ppeetteerrs/torch-conv-gradfix/issues
+    - Report Issues: https://github.com/ppeetteerrs/stylegan2-torch/issues
 
 extra_javascript:
     - javascripts/mathjax.js
